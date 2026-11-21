@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PocketPlan is a student budget tracker that shows how much you can safely spend each day." />
+  <title>PocketPlan – Student Budget Tracker</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💚</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1>Pocket<span>Plan</span></h1>
+      <p class="tagline">Know where your allowance goes.</p>
+    </div>
+  </header>
+
+  <main class="wrap grid">
+    <!-- Summary -->
+    <section class="card summary" aria-labelledby="summary-title">
+      <div class="month-nav">
+        <button type="button" class="icon-btn" id="prev-month" aria-label="Previous month">‹</button>
+        <h2 id="summary-title"><span id="month-label">This month</span></h2>
+        <button type="button" class="icon-btn" id="next-month" aria-label="Next month">›</button>
+      </div>
+
+      <div class="numbers">
+        <div>
+          <span class="label">Spent</span>
+          <strong id="spent">Rs 0</strong>
+        </div>
+        <div>
+          <span class="label">Left</span>
+          <strong id="left">—</strong>
+        </div>
+        <div>
+          <span class="label">Safe per day</span>
+          <strong id="perday">—</strong>
+        </div>
+      </div>
+
+      <div class="bar" role="progressbar" aria-label="Budget used" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="bar">
+        <div class="bar-fill" id="bar-fill"></div>
+      </div>
+      <p class="alert" id="alert" role="status" hidden></p>
+
+      <label class="budget-field">
+        Monthly budget (Rs)
+        <input type="number" id="budget" min="0" step="100" placeholder="e.g. 15000" />
+      </label>
+    </section>
+
+    <!-- Add / edit expense -->
+    <section class="card" aria-labelledby="add-title">
+      <h2 id="add-title">Add expense</h2>
+      <form id="expense-form">
+        <label>
+          Amount (Rs)
+          <input type="number" id="amount" min="1" max="10000000" step="1" required placeholder="250" />
+        </label>
+        <label>
+          Category
+          <select id="category" required>
+            <option value="Food">🍔 Food</option>
+            <option value="Transport">🚌 Transport</option>
+            <option value="Study">📚 Study</option>
+            <option value="Fun">🎬 Fun</option>
+            <option value="Other">✨ Other</option>
+          </select>
+        </label>
+        <label>
+          Note (optional)
+          <input type="text" id="note" maxlength="40" placeholder="Biryani at cafeteria" />
+        </label>
+        <label>
+          Date
+          <input type="date" id="date" required />
+        </label>
+        <div class="row">
+          <button type="submit" class="btn" id="submit-btn">Add expense</button>
+          <button type="button" class="btn ghost" id="cancel-btn" hidden>Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Chart + breakdown -->
+    <section class="card" aria-labelledby="cat-title">
+      <h2 id="cat-title">By category</h2>
+      <div class="chart-wrap" id="chart-wrap" hidden>
+        <canvas id="chart" aria-label="Doughnut chart of spending by category" role="img"></canvas>
+      </div>
+      <p class="empty" id="chart-empty">Add an expense to see your spending chart.</p>
+      <div id="breakdown"></div>
+    </section>
+
+    <!-- Expense list -->
+    <section class="card wide" aria-labelledby="list-title">
+      <div class="list-head">
+        <h2 id="list-title">Expenses</h2>
+        <label class="inline">
+          <span class="sr-only">Filter by category</span>
+          <select id="filter">
+            <option value="All">All categories</option>
+            <option value="Food">🍔 Food</option>
+            <option value="Transport">🚌 Transport</option>
+            <option value="Study">📚 Study</option>
+            <option value="Fun">🎬 Fun</option>
+            <option value="Other">✨ Other</option>
+          </select>
+        </label>
+      </div>
+      <ul id="list" class="list"></ul>
+      <p class="empty" id="empty">No expenses yet. Add your first one!</p>
+
+      <div class="toolbar">
+        <button type="button" class="btn small" id="demo-btn">Load demo data</button>
+        <button type="button" class="btn small ghost" id="export-btn">Export CSV</button>
+        <button type="button" class="btn small danger" id="clear-btn">Clear all data</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">Made for LaunchPad Hacks 💚💗 · Your data stays in your browser.</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
